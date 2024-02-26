@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IPT Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <style>
+        .main-content {
+            background-image: url('fields.jpg');
+            background-size: cover;
+            padding: 50;
+        }
+
+        .form {
+            background-color: #20242EBC;
+            margin-top: 10%;
+            margin-bottom: 8%;
+            margin-left: 30%;
+            margin-right: 30%;
+            padding-top: 2%;
+            padding-bottom: 2%;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        .form-floating {
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        h2 {
+            color: aliceblue;
+        }
+
+        .forgotPass {
+            cursor: pointer;
+            color: aliceblue;
+        }
+    </style>
+</head>
+
+<body class="main-content">
+
+    <center>
+        <form id="MainForm" class="form">
+            <h2 class="">Login User</h2>
+            <div class="form-floating">
+                <input type="email" class="form-control" id="emailInp" placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="passwordInp" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <button type="submit" class="btn btn-primary" style="float: center;">Login</button>
+            <a href="register.html">
+                <button type="button" style="float: center;" class="btn btn-primary me-2">Sign Up</button>
+            </a>
+            <div><label id="forgotPass" onclick="sendResetPass()" class="forgotPass">Forgot Password?</label></div>
+                
+            
+
+        </form>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+            import { getDatabase, get, ref, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+            import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyAESwOq-M9TM2LTgN_BSb46EgC3TPeoM60",
+                authDomain: "projectipt-69736.firebaseapp.com",
+                projectId: "projectipt-69736",
+                storageBucket: "projectipt-69736.appspot.com",
+                messagingSenderId: "818747495180",
+                appId: "1:818747495180:web:0007e493e559154d45ef29"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const db = getDatabase();
+            const auth = getAuth(app);
+            const dbref = ref(db);
+
+            let EmailInp = document.getElementById('emailInp');
+            let PassInp = document.getElementById('passwordInp');
+            let MainForm = document.getElementById('MainForm');
+            let ForgotPass = document.getElementById('forgotPass');
+
+            let SignInUser = evt => {
+                evt.preventDefault();
+                signInWithEmailAndPassword(auth, EmailInp.value, PassInp.value)
+                    .then((credentials) => {
+
+                        if (credentials.user.emailVerified) {
+                            get(child(dbref, 'UsersAuthList/' + credentials.user.uid)).then((snapshot) => {
+                                if (snapshot.exists()) {  // Use exists() instead of exist
+                                    console.log('User data retrieved:', snapshot.val());
+                                    sessionStorage.setItem("user-info", JSON.stringify({
+                                        firstname: snapshot.val().firstname,
+                                        lastname: snapshot.val().lastname
+                                    }));
+                                    sessionStorage.setItem("user-creds", JSON.stringify(credentials.user));
+                                    window.location.href = 'home.html';
+                                }
+                            });
+                        } else {
+                            alert("Your email has not yet verified!");
+                        }
+
+
+                    })
+                    .catch((error) => {
+                        alert(error.message);
+                        console.log(error.code);
+                        console.log(error.message);
+                    });
+            }
+
+            let ForgotPassword = () => {
+                sendPasswordResetEmail(auth, emailInp.value)
+                    .then(() => {
+                        alert("Password Reset link has been sent to your email")
+                    })
+                    .catch((error) => {
+                        alert(error.message);
+                        console.log(error.code);
+                        console.log(error.message);
+                    })
+            }
+
+            MainForm.addEventListener('submit', SignInUser);
+            ForgotPass.addEventListener('click', ForgotPassword);
+
+
+        </script>
+
+
+        <script>
+
+
+        </script>
+    </center>
+
+</body>
+
+</html>
