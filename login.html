@@ -40,10 +40,27 @@
             cursor: pointer;
             color: aliceblue;
         }
+
+
+        .navbar.navbar-expand-lg {
+            background-color: #585E0F !important;
+        }
+
+        .navbar-brand {
+            color: #FAC382;
+            font-weight: bold;
+            font-size: larger;
+        }
     </style>
 </head>
 
 <body class="main-content">
+
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">FeelDs</a>
+        </div>
+    </nav>
 
     <center>
         <form id="MainForm" class="form">
@@ -61,8 +78,8 @@
                 <button type="button" style="float: center;" class="btn btn-primary me-2">Sign Up</button>
             </a>
             <div><label id="forgotPass" onclick="sendResetPass()" class="forgotPass">Forgot Password?</label></div>
-                
-            
+
+
 
         </form>
 
