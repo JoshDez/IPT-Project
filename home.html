@@ -18,16 +18,19 @@
     }
 
     .navbar-brand {
-      color: #FAC382;
+      color: #F3CFA2;
       font-weight: bold;
-      font-size: larger;
+      font-size: 36px;
+      margin-left: 1%;
     }
+
     .nav-link {
-      color: #FAC382;
+      color: #F3CFA2;
     }
 
     .form {
-      background-color: #20242EBC;
+      background-color: rgba(24, 12, 0, 0.6);
+      border-radius: 10px;
       margin-top: 10%;
       margin-bottom: 8%;
       margin-left: 30%;
@@ -47,7 +50,7 @@
 <body class='main'>
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">FeelDs</a>
+      <a class="navbar-brand" href="#">SJJ Travel</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -70,11 +73,7 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
           </li>
         </ul>
         <form class="d-flex" role="search">
@@ -110,8 +109,8 @@
       if (!sessionStorage.getItem("user-creds")) {
         window.location.href = 'login.html'
       } else {
-        MsgHead.innerText = `User with email "${UserCreds.email}" logged in`;
-        GreetHead.innerText = `Welcome ${UserInfo.firstname + " " + UserInfo.lastname}!`;
+        //MsgHead.innerText = `User with email "${UserCreds.email}" logged in`;
+        GreetHead.innerText = `Welcome to our Website ${UserInfo.firstname + " " + UserInfo.lastname}!`;
       }
     }
 

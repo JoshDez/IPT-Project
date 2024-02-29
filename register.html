@@ -16,7 +16,8 @@
         }
 
         .form {
-            background-color: #20242EBC;
+            background-color: rgba(24, 12, 0, 0.6);
+            border-radius: 10px;
             margin-top: 10%;
             margin-bottom: 8%;
             margin-left: 30%;
@@ -33,11 +34,11 @@
         }
 
         h2 {
-            color: aliceblue;
+            color: #F3CFA2;
         }
 
         p {
-            color: aliceblue;
+            color: #F3CFA2;
         }
 
         .navbar.navbar-expand-lg {
@@ -45,9 +46,10 @@
         }
 
         .navbar-brand {
-            color: #FAC382;
+            color: #F3CFA2;
             font-weight: bold;
-            font-size: larger;
+            font-size: 36px;
+            margin-left: 1%;
         }
     </style>
 </head>
@@ -56,7 +58,7 @@
 
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">FeelDs</a>
+            <a class="navbar-brand" href="#">SJJ Travel</a>
         </div>
     </nav>
 
@@ -93,9 +95,11 @@
                 <label for="floatingPassword">Confirm Password</label>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="float: center;">Create New Account</button>
+            <button type="submit" class="btn btn-primary"
+                style="float: center; background-color: #A44F34; border-color: #A44F34; margin-top: 3%;">Create New
+                Account</button>
             <a href="login.html">
-                <p>Already have an account? Sign In</p>
+                <p style="margin-top: 3%;">Already have an account? Sign In</p>
             </a>
         </form>
 
@@ -113,6 +117,20 @@
                 password.value = "";
             }
 
+            function redirectToPageWithCountdown(url, countdownSeconds) {
+                // Display the countdown
+                for (let i = countdownSeconds; i > 0; i--) {
+                    setTimeout(() => {
+                        console.log(`Redirecting in ${i} seconds...`);
+                    }, (countdownSeconds - i) * 1000); // Multiply by 1000 to convert seconds to milliseconds
+                }
+
+                // Redirect after the countdown
+                setTimeout(() => {
+                    window.location.href = url;
+                }, countdownSeconds * 1000);
+            }
+
             function validateForm() {
                 if (fname.value === '') {
                     alert("Enter First Name");
@@ -128,6 +146,9 @@
                     clearCredentials();
                 } else if (password.value === '') {
                     alert("Enter Your Password");
+                    clearCredentials();
+                } else if (confirmPass.value.length < 6) {
+                    alert("Your password should atleast be more than 6 characters");
                     clearCredentials();
                 } else if (confirmPass.value === '') {
                     alert("Enter Your Confirm Password");
@@ -178,7 +199,7 @@
             let LnameInp = document.getElementById('lnameInp');
             let BdayInp = document.getElementById('bdayInp')
             let MainForm = document.getElementById('MainForm');
-            
+
 
             let RegisterUser = evt => {
                 evt.preventDefault();
@@ -188,6 +209,7 @@
                         sendEmailVerification(auth.currentUser)
                             .then(() => {
                                 alert("Email verification Link sent!")
+                                redirectToPageWithCountdown('login.html', 2)
                             });
                         set(ref(db, 'UsersAuthList/' + userCredentials.user.uid), {
                             firstname: FnameInp.value,
