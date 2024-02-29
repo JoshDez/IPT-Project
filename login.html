@@ -130,7 +130,8 @@
                                     console.log('User data retrieved:', snapshot.val());
                                     sessionStorage.setItem("user-info", JSON.stringify({
                                         firstname: snapshot.val().firstname,
-                                        lastname: snapshot.val().lastname
+                                        lastname: snapshot.val().lastname,
+                                        birthday: snapshot.val().birthday
                                     }));
                                     sessionStorage.setItem("user-creds", JSON.stringify(credentials.user));
                                     window.location.href = 'home.html';
