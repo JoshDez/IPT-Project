@@ -14,7 +14,7 @@
         }
 
         .navbar.navbar-expand-lg {
-            background-color: #585E0F !important;
+            background-color: #333800 !important;
         }
 
         .navbar-brand {
@@ -95,6 +95,7 @@
             <h5 id="displayName"></h5>
             <h5 id="displayEmail"></h5>
             <h5 id="displayBday"></h5>
+            <h5 id="displayContact"></h5>
         </div>
     </center>
 
@@ -104,11 +105,14 @@
     <script>
         let UserCreds = JSON.parse(sessionStorage.getItem("user-creds"));
         let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));
+        let SignoutBtn = document.getElementById('signoutbutton');
+
 
         let header = document.getElementById('header');
         let displayName = document.getElementById('displayName');
         let displayEmail = document.getElementById('displayEmail');
         let displayBday = document.getElementById('displayBday');
+        let displayContact = document.getElementById('displayContact');
 
         let Signout = () => {
             sessionStorage.removeItem("user-creds");
@@ -122,14 +126,15 @@
                 window.location.href = 'login.html'
             } else {
                 header.innerText = `USER PROFILE`;
-                displayName.innerText = `Name: ${UserInfo.firstname + " " + UserInfo.lastname}`;
+                displayName.innerText = `Name: ${UserInfo.firstname + " " + UserInfo.lastname + " " + UserInfo.suffix}`;
                 displayEmail.innerText = `Email: ${UserCreds.email}`;
                 displayBday.innerText = `Birthday: ${UserInfo.birthday}`;
+                displayContact.innerText = `Contact: ${UserInfo.contact}`;
             }
         }
 
         window.addEventListener('load', CheckCred);
-        SignoutBtn.addEventListener('click', Signout)
+        SignoutBtn.addEventListener('click', Signout);
     </script>
 </body>
 

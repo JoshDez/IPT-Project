@@ -45,7 +45,7 @@
 
 
         .navbar.navbar-expand-lg {
-            background-color: #585E0F !important;
+            background-color: #333800 !important;
         }
 
         .navbar-brand {
@@ -131,7 +131,9 @@
                                     sessionStorage.setItem("user-info", JSON.stringify({
                                         firstname: snapshot.val().firstname,
                                         lastname: snapshot.val().lastname,
-                                        birthday: snapshot.val().birthday
+                                        suffix: snapshot.val().suffix,
+                                        birthday: snapshot.val().birthday,
+                                        contact: snapshot.val().contact
                                     }));
                                     sessionStorage.setItem("user-creds", JSON.stringify(credentials.user));
                                     window.location.href = 'home.html';

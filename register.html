@@ -42,7 +42,7 @@
         }
 
         .navbar.navbar-expand-lg {
-            background-color: #585E0F !important;
+            background-color: #333800 !important;
         }
 
         .navbar-brand {
@@ -77,8 +77,18 @@
             </div>
 
             <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="suffixInp" placeholder="Suffix">
+                <label for="floatingInput">Suffix</label>
+            </div>
+
+            <div class="form-floating mb-3">
                 <input type="date" class="form-control" id="bdayInp" placeholder="Birthday">
                 <label for="floatingInput">Birthday</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="contactInp" placeholder="Contact No.">
+                <label for="floatingInput">Contact No.</label>
             </div>
 
             <div class="form-floating mb-3">
@@ -109,7 +119,9 @@
             var confirmPass = document.getElementById('confirmPassInp');
             var fname = document.getElementById('fnameInp');
             var lname = document.getElementById('lnameInp');
-            var birthday = document.getElementById('bdayInp')
+            var suffix = document.getElementById('suffixInp');
+            var birthday = document.getElementById('bdayInp');
+            var contact = document.getElementById('contactInp');
             var mainForm = document.getElementById('MainForm');
 
             function clearCredentials() {
@@ -140,6 +152,9 @@
                     clearCredentials();
                 } else if (birthday.value === '') {
                     alert("Enter Your Birthday");
+                    clearCredentials();
+                } else if (contact.value === '') {
+                    alert("Enter Your Contact No.");
                     clearCredentials();
                 } else if (email.value === '') {
                     alert("Enter Your Email");
@@ -197,7 +212,9 @@
             let confPassInp = document.getElementById('confirmPassInp');
             let FnameInp = document.getElementById('fnameInp');
             let LnameInp = document.getElementById('lnameInp');
-            let BdayInp = document.getElementById('bdayInp')
+            let BdayInp = document.getElementById('bdayInp');
+            let SuffixInp = document.getElementById('suffixInp');
+            let ContactInp = document.getElementById('contactInp');
             let MainForm = document.getElementById('MainForm');
 
 
@@ -214,7 +231,9 @@
                         set(ref(db, 'UsersAuthList/' + userCredentials.user.uid), {
                             firstname: FnameInp.value,
                             lastname: LnameInp.value,
-                            birthday: BdayInp.value
+                            suffix: SuffixInp.value,
+                            birthday: BdayInp.value,
+                            contact: ContactInp.value
                         });
                     })
                     .catch((error) => {
