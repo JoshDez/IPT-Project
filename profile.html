@@ -8,6 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <style>
+        .hidden {
+            display: none;
+        }
+
         .main {
             background-image: url('fields.jpg');
             background-size: cover;
@@ -33,21 +37,25 @@
             border-radius: 10px;
             margin-top: 10%;
             margin-bottom: 8%;
-            margin-left: 30%;
-            margin-right: 30%;
+            margin-left: 20%;
+            margin-right: 20%;
             padding-top: 2%;
             padding-bottom: 2%;
             padding-left: 5%;
             padding-right: 5%;
         }
 
-        h2 {
+        h3 {
             margin-bottom: 3%;
             color: white;
         }
 
         h5 {
             color: white;
+        }
+
+        table {
+            width: 500px;
         }
     </style>
 </head>
@@ -91,11 +99,92 @@
     </nav>
     <center>
         <div class="form">
-            <h2 id="header"></h2>
-            <h5 id="displayName"></h5>
-            <h5 id="displayEmail"></h5>
-            <h5 id="displayBday"></h5>
-            <h5 id="displayContact"></h5>
+            <h3>USER PROFILE</h3>
+            <div id="displayUserInfo">
+                <table>
+                    <tr>
+                        <td>
+                            <h5>Name: </h5>
+                        </td>
+                        <td>
+                            <h5 id="displayName"></h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h5>Email: </h5>
+                        </td>
+                        <td>
+                            <h5 id="displayEmail"></h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h5>Birthday: </h5>
+                        </td>
+                        <td>
+                            <h5 id="displayBday"></h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h5>Contact: </h5>
+                        </td>
+                        <td>
+                            <h5 id="displayContact"></h5>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <div id="displayEditUserInfo" class="hidden">
+                <table>
+                    <tr>
+                        <td>
+                            <h5>First Name: </h5>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="fnameInp" placeholder="First name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h5>Last Name: </h5>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="lnameInp" placeholder="Last name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h5>Suffix: </h5>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="suffixInp" placeholder="Suffix">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h5>Birthday: </h5>
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" id="bdayInp" placeholder="Birthday">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h5>Contact: </h5>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" id="contactInp" placeholder="Contact No.">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <button onclick="toggleDiv()" style="margin-top: 2%;">Edit</button>
+
+            <button id="saveBtn" style="margin-top: 2%;" class="hidden">Save</button>
         </div>
     </center>
 
@@ -106,13 +195,21 @@
         let UserCreds = JSON.parse(sessionStorage.getItem("user-creds"));
         let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));
         let SignoutBtn = document.getElementById('signoutbutton');
-
+        let saveBtn = document.getElementById('saveBtn');
 
         let header = document.getElementById('header');
+
+        //For user info
         let displayName = document.getElementById('displayName');
-        let displayEmail = document.getElementById('displayEmail');
         let displayBday = document.getElementById('displayBday');
         let displayContact = document.getElementById('displayContact');
+
+        //For edit user info
+        let fname = document.getElementById('fnameInp');
+        let lname = document.getElementById('lnameInp');
+        let suffx = document.getElementById('suffixInp');
+        let bday = document.getElementById('bdayInp');
+        let contactNo = document.getElementById('contactInp');
 
         let Signout = () => {
             sessionStorage.removeItem("user-creds");
@@ -125,16 +222,93 @@
             if (!sessionStorage.getItem("user-creds")) {
                 window.location.href = 'login.html'
             } else {
-                header.innerText = `USER PROFILE`;
-                displayName.innerText = `Name: ${UserInfo.firstname + " " + UserInfo.lastname + " " + UserInfo.suffix}`;
-                displayEmail.innerText = `Email: ${UserCreds.email}`;
-                displayBday.innerText = `Birthday: ${UserInfo.birthday}`;
-                displayContact.innerText = `Contact: ${UserInfo.contact}`;
+                displayName.innerText = `${UserInfo.firstname + " " + UserInfo.lastname + " " + UserInfo.suffix}`;
+                displayEmail.innerText = `${UserCreds.email}`;
+                displayBday.innerText = `${UserInfo.birthday}`;
+                displayContact.innerText = `${UserInfo.contact}`;
+
+                fname.value = `${UserInfo.firstname}`;
+                lname.value = `${UserInfo.lastname}`;
+                suffx.value = `${UserInfo.suffix}`;
+                bday.value = `${UserInfo.birthday}`;
+                contactNo.value = `${UserInfo.contact}`;
             }
+        }
+
+        function toggleDiv() {
+            var userInfo = document.getElementById("displayUserInfo");
+            var editUserInfo = document.getElementById("displayEditUserInfo");
+            var saveUserInfo = document.getElementById("saveBtn");
+            userInfo.classList.toggle("hidden");
+            editUserInfo.classList.toggle("hidden");
+            saveUserInfo.classList.toggle("hidden");
+        }
+
+        function validateForm() {
+
         }
 
         window.addEventListener('load', CheckCred);
         SignoutBtn.addEventListener('click', Signout);
+    </script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, get, set, ref, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAESwOq-M9TM2LTgN_BSb46EgC3TPeoM60",
+            authDomain: "projectipt-69736.firebaseapp.com",
+            projectId: "projectipt-69736",
+            storageBucket: "projectipt-69736.appspot.com",
+            messagingSenderId: "818747495180",
+            appId: "1:818747495180:web:0007e493e559154d45ef29"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+        const auth = getAuth(app);
+
+        let saveNewUserInfo = () => {
+            if (fname.value === '') {
+                alert("Enter First Name");
+            } else if (lname.value === '') {
+                alert("Enter Last Name");
+            } else if (bday.value === '') {
+                alert("Enter Your Birthday");
+            } else if (contactNo.value === '') {
+                alert("Enter Your Contact No.");
+            } else {
+                set(ref(db, 'UsersAuthList/' + UserInfo.uid), {
+                    firstname: fname.value,
+                    lastname: lname.value,
+                    suffix: suffixInp.value,
+                    birthday: bday.value,
+                    contact: contactNo.value
+                });
+
+                sessionStorage.setItem("user-info", JSON.stringify({
+                    firstname: fname.value,
+                    lastname: lname.value,
+                    suffix: suffixInp.value,
+                    birthday: bday.value,
+                    contact: contactNo.value,
+                    uid: UserInfo.uid
+                    
+                }));
+                window.location.href = 'profile.html';
+
+            }
+        }
+
+        saveBtn.addEventListener('click', saveNewUserInfo);
+
     </script>
 </body>
 
