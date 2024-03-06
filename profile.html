@@ -63,7 +63,7 @@
 <body class='main'>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="home.html">SJJ Travel</a>
+            <a class="navbar-brand" href="#">SJJ Travel</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -182,9 +182,9 @@
                     </tr>
                 </table>
             </div>
-            <button onclick="toggleDiv()" style="margin-top: 2%; color: white; float: center; background-color: #A44F34; border-color: #A44F34;">Edit</button>
+            <button onclick="toggleDiv()" style="margin-top: 2%; color: aliceblue; background-color: #A44F34; border-color: #A44F34;">Edit</button>
 
-            <button id="saveBtn" style="margin-top: 2%; color: white; float: center; background-color: #A44F34; border-color: #A44F34;" class="hidden">Save</button>
+            <button id="saveBtn" style="margin-top: 2%; color: aliceblue; background-color: #A44F34; border-color: #A44F34;" class="hidden">Save</button>
         </div>
     </center>
 
@@ -251,8 +251,8 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, get, set, ref, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -271,6 +271,21 @@
         const db = getDatabase();
         const auth = getAuth(app);
 
+        function redirectToPageWithCountdown(url, countdownSeconds) {
+                // Display the countdown
+                for (let i = countdownSeconds; i > 0; i--) {
+                    setTimeout(() => {
+                        console.log(`Redirecting in ${i} seconds...`);
+                    }, (countdownSeconds - i) * 1000); // Multiply by 1000 to convert seconds to milliseconds
+                }
+
+                // Redirect after the countdown
+                setTimeout(() => {
+                    window.location.href = url;
+                }, countdownSeconds * 1000);
+            }
+
+
         let saveNewUserInfo = () => {
             if (fname.value === '') {
                 alert("Enter First Name");
@@ -281,24 +296,28 @@
             } else if (contactNo.value === '') {
                 alert("Enter Your Contact No.");
             } else {
-                set(ref(db, 'UsersAuthList/' + UserInfo.uid), {
+                update(ref(db, 'UsersAuthList/' + UserCreds.uid), {
                     firstname: fname.value,
                     lastname: lname.value,
-                    suffix: suffixInp.value,
+                    suffix: suffx.value,
                     birthday: bday.value,
                     contact: contactNo.value
-                });
+                })
+                .then(() => {
+                    alert("Data Updated Successfully")
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
 
                 sessionStorage.setItem("user-info", JSON.stringify({
                     firstname: fname.value,
                     lastname: lname.value,
-                    suffix: suffixInp.value,
+                    suffix: suffx.value,
                     birthday: bday.value,
-                    contact: contactNo.value,
-                    uid: UserInfo.uid
-                    
-                }));
-                window.location.href = 'profile.html';
+                    contact: contactNo.value
+                })); 
+                redirectToPageWithCountdown('profile.html', 2);
 
             }
         }
