@@ -285,21 +285,6 @@
                 }, countdownSeconds * 1000);
             }
 
-
-        function redirectToPageWithCountdown(url, countdownSeconds) {
-                // Display the countdown
-                for (let i = countdownSeconds; i > 0; i--) {
-                    setTimeout(() => {
-                        console.log(`Redirecting in ${i} seconds...`);
-                    }, (countdownSeconds - i) * 1000); // Multiply by 1000 to convert seconds to milliseconds
-                }
-
-                // Redirect after the countdown
-                setTimeout(() => {
-                    window.location.href = url;
-                }, countdownSeconds * 1000);
-            }
-
         let saveNewUserInfo = () => {
             if (fname.value === '') {
                 alert("Enter First Name");
@@ -331,6 +316,7 @@
                     birthday: bday.value,
                     contact: contactNo.value
                 })); 
+
                 redirectToPageWithCountdown('profile.html', 2);
 
             }
