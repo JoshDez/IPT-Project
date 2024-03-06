@@ -182,9 +182,9 @@
                     </tr>
                 </table>
             </div>
-            <button onclick="toggleDiv()" style="margin-top: 2%;">Edit</button>
+            <button onclick="toggleDiv()" style="margin-top: 2%; color: aliceblue; background-color: #A44F34; border-color: #A44F34;">Edit</button>
 
-            <button id="saveBtn" style="margin-top: 2%;" class="hidden">Save</button>
+            <button id="saveBtn" style="margin-top: 2%; color: aliceblue; background-color: #A44F34; border-color: #A44F34;" class="hidden">Save</button>
         </div>
     </center>
 
@@ -244,10 +244,6 @@
             saveUserInfo.classList.toggle("hidden");
         }
 
-        function validateForm() {
-
-        }
-
         window.addEventListener('load', CheckCred);
         SignoutBtn.addEventListener('click', Signout);
     </script>
@@ -255,8 +251,8 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, get, set, ref, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -275,6 +271,21 @@
         const db = getDatabase();
         const auth = getAuth(app);
 
+        function redirectToPageWithCountdown(url, countdownSeconds) {
+                // Display the countdown
+                for (let i = countdownSeconds; i > 0; i--) {
+                    setTimeout(() => {
+                        console.log(`Redirecting in ${i} seconds...`);
+                    }, (countdownSeconds - i) * 1000); // Multiply by 1000 to convert seconds to milliseconds
+                }
+
+                // Redirect after the countdown
+                setTimeout(() => {
+                    window.location.href = url;
+                }, countdownSeconds * 1000);
+            }
+
+
         let saveNewUserInfo = () => {
             if (fname.value === '') {
                 alert("Enter First Name");
@@ -285,24 +296,28 @@
             } else if (contactNo.value === '') {
                 alert("Enter Your Contact No.");
             } else {
-                set(ref(db, 'UsersAuthList/' + UserInfo.uid), {
+                update(ref(db, 'UsersAuthList/' + UserCreds.uid), {
                     firstname: fname.value,
                     lastname: lname.value,
-                    suffix: suffixInp.value,
+                    suffix: suffx.value,
                     birthday: bday.value,
                     contact: contactNo.value
-                });
+                })
+                .then(() => {
+                    alert("Data Updated Successfully")
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
 
                 sessionStorage.setItem("user-info", JSON.stringify({
                     firstname: fname.value,
                     lastname: lname.value,
-                    suffix: suffixInp.value,
+                    suffix: suffx.value,
                     birthday: bday.value,
-                    contact: contactNo.value,
-                    uid: UserInfo.uid
-                    
-                }));
-                window.location.href = 'profile.html';
+                    contact: contactNo.value
+                })); 
+                redirectToPageWithCountdown('profile.html', 2);
 
             }
         }
