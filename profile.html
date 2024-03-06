@@ -63,7 +63,7 @@
 <body class='main'>
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">SJJ Travel</a>
+            <a class="navbar-brand" href="home.html">SJJ Travel</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -182,9 +182,9 @@
                     </tr>
                 </table>
             </div>
-            <button onclick="toggleDiv()" style="margin-top: 2%; float: center; background-color: #A44F34; border-color: #A44F34;">Edit</button>
+            <button onclick="toggleDiv()" style="margin-top: 2%; color: white; float: center; background-color: #A44F34; border-color: #A44F34;">Edit</button>
 
-            <button id="saveBtn" style="margin-top: 2%; float: center; background-color: #A44F34; border-color: #A44F34;" class="hidden">Save</button>
+            <button id="saveBtn" style="margin-top: 2%; color: white; float: center; background-color: #A44F34; border-color: #A44F34;" class="hidden">Save</button>
         </div>
     </center>
 
@@ -242,10 +242,6 @@
             userInfo.classList.toggle("hidden");
             editUserInfo.classList.toggle("hidden");
             saveUserInfo.classList.toggle("hidden");
-        }
-
-        function validateForm() {
-
         }
 
         window.addEventListener('load', CheckCred);
