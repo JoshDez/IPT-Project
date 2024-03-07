@@ -182,7 +182,7 @@
                     </tr>
                 </table>
             </div>
-            <button onclick="toggleDiv()" style="margin-top: 2%; color: aliceblue; background-color: #A44F34; border-color: #A44F34;">Edit</button>
+            <button id="editBtn" onclick="toggleDiv()" style="margin-top: 2%; color: aliceblue; background-color: #A44F34; border-color: #A44F34;">Edit</button>
 
             <button id="saveBtn" style="margin-top: 2%; color: aliceblue; background-color: #A44F34; border-color: #A44F34;" class="hidden">Save</button>
         </div>
@@ -196,9 +196,9 @@
         let UserInfo = JSON.parse(sessionStorage.getItem("user-info"));
         let SignoutBtn = document.getElementById('signoutbutton');
         let saveBtn = document.getElementById('saveBtn');
+        let editBtn = document.getElementById('editBtn');
 
         let header = document.getElementById('header');
-
         //For user info
         let displayName = document.getElementById('displayName');
         let displayBday = document.getElementById('displayBday');
@@ -236,6 +236,13 @@
         }
 
         function toggleDiv() {
+            if (editBtn.innerText === "Edit"){
+                editBtn.innerText = "Cancel";
+            } else {
+                editBtn.innerText = "Edit";
+            }
+
+
             var userInfo = document.getElementById("displayUserInfo");
             var editUserInfo = document.getElementById("displayEditUserInfo");
             var saveUserInfo = document.getElementById("saveBtn");
